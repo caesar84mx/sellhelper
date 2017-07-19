@@ -1,0 +1,34 @@
+Project "Sellhelper"
+
+Objective: help to internet sellers to perform their internet trading.
+
+Description: this is a REST application intended to help the sellers to perform their internet trading,
+as follows:
+- manage the stock;
+- manage the orders;
+- manage the list of clients and suppliers;
+- gather statistics on their operations and results;
+- (in the future) export the reports in *.pdf and *.xls
+
+Objects:
+1. User:
+There are 2 types of users: ordinary user and admin.
+All users can:
+- view other profiles;
+- modify their own profile details(name, surname, password);
+- create others users;
+- (in the future) export the reports in *.pdf and *.xls
+
+All sellers are usual users, they can:
+- manage their stocks;
+- manage the orders;
+- manage the list of their clients and suppliers;
+- gather statistics on their operations and results;
+
+
+The admins can:
+- create new users;
+- modify passwords of other users;
+- view sellers;
+- activate or deactivate them;
+- gather statistics on the operations result (total income), processed by this application;
