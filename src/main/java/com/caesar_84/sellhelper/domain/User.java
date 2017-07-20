@@ -35,8 +35,8 @@ public class User extends NamedEntity {
     @Column(name = "parent_id")
     private Integer parentId;
 
-    @Column(name = "role", nullable = false)
-    @NotBlank
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private Roles role;
 
     @Column(name = "enabled", columnDefinition = "boolean default true")
@@ -56,7 +56,7 @@ public class User extends NamedEntity {
         super(id, name);
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.password = ENCODER.encode(password);
         this.parentId = parentId;
         this.role = role;
         this.enabled = enabled;
@@ -66,11 +66,20 @@ public class User extends NamedEntity {
 
     public User(String name, String lastName, String email, String password, Integer parentId,
                 Roles role, boolean enabled, LocalDateTime registered, LocalDateTime modified) {
-        this(null, name, lastName, email, password, parentId, role, enabled, registered, modified);
+        this(null, name, lastName, email, password, parentId, role, enabled, registered,
+                modified);
     }
 
-    public User(String name, String lastName, String email, String password, Integer parentId, Roles role) {
-        this(name, lastName, email, password, parentId, role, true, LocalDateTime.now(), LocalDateTime.now());
+    public User(String name, String lastName, String email, String password, Integer parentId,
+                Roles role) {
+        this(name, lastName, email, password, parentId, role, true, LocalDateTime.now(),
+                LocalDateTime.now());
+    }
+
+    public User(String name, String lastName, String email, String password, Integer parentId,
+                Roles role, LocalDateTime registered) {
+        this(name, lastName, email, password, parentId, role, true, registered,
+                LocalDateTime.now());
     }
 
     public User(User user) {
