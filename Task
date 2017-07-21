@@ -32,3 +32,6 @@ The admins can:
 - view sellers;
 - activate or deactivate them;
 - gather statistics on the operations result (total income), processed by this application;
+
+To post a user:
+curl -u "caesar.84@mail.ru":"password." -X POST -d '{"name":"Marcus", "lastName": "Brutus", "email":"brutus.84@word.ir", "password":"pass1234", "parentId":1, "role":"ROLE_USER"}' -H "Content-Type:application/json" http://localhost:8080/rest-api/v1/users
