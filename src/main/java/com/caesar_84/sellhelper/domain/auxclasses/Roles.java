@@ -1,4 +1,4 @@
-package com.caesar_84.sellhelper.domain;
+package com.caesar_84.sellhelper.domain.auxclasses;
 
 import org.springframework.security.core.GrantedAuthority;
 

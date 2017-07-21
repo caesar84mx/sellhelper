@@ -1,5 +1,6 @@
 package com.caesar_84.sellhelper.domain;
 
+import com.caesar_84.sellhelper.domain.auxclasses.Roles;
 import com.caesar_84.sellhelper.domain.basicabstracts.NamedEntity;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;

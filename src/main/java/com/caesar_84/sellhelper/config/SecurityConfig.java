@@ -1,6 +1,6 @@
 package com.caesar_84.sellhelper.config;
 
-import com.caesar_84.sellhelper.domain.Roles;
+import com.caesar_84.sellhelper.domain.auxclasses.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
