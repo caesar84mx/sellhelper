@@ -13,11 +13,13 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email", name = "user_uidx_id"),
-        @UniqueConstraint(columnNames = "parent_id", name = "user_uidx_parent")
+        @UniqueConstraint(columnNames = "email", name = "user_uidx_id")
 })
 public class User extends NamedEntity {
     private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
+
+    @Column(name = "middle_name", nullable = false)
+    private String middleName;
 
     @Column(name = "last_name", nullable = false)
     @NotBlank
@@ -51,10 +53,11 @@ public class User extends NamedEntity {
 
     public User() {}
 
-    public User(Integer id, String name, String lastName, String email, String password,
+    public User(Integer id, String name, String middleName, String lastName, String email, String password,
                 Integer parentId, Roles role, boolean enabled, LocalDateTime registered,
                 LocalDateTime modified) {
         super(id, name);
+        this.middleName = middleName;
         this.lastName = lastName;
         this.email = email;
         this.password = ENCODER.encode(password);
@@ -65,29 +68,33 @@ public class User extends NamedEntity {
         this.modified = modified;
     }
 
-    public User(String name, String lastName, String email, String password, Integer parentId,
+    public User(String name,String middleName, String lastName, String email, String password, Integer parentId,
                 Roles role, boolean enabled, LocalDateTime registered, LocalDateTime modified) {
-        this(null, name, lastName, email, password, parentId, role, enabled, registered,
+        this(null, middleName, name, lastName, email, password, parentId, role, enabled, registered,
                 modified);
     }
 
-    public User(String name, String lastName, String email, String password, Integer parentId,
+    public User(String name, String middleName, String lastName, String email, String password, Integer parentId,
                 Roles role) {
-        this(name, lastName, email, password, parentId, role, true, LocalDateTime.now(),
+        this(name, middleName, lastName, email, password, parentId, role, true, LocalDateTime.now(),
                 LocalDateTime.now());
     }
 
-    public User(String name, String lastName, String email, String password, Integer parentId,
+    public User(String name, String middleName, String lastName, String email, String password, Integer parentId,
                 Roles role, LocalDateTime registered) {
-        this(name, lastName, email, password, parentId, role, true, registered,
+        this(name, middleName, lastName, email, password, parentId, role, true, registered,
                 LocalDateTime.now());
     }
 
     public User(User user) {
-        this(user.getId(), user.getName(), user.getLastName(), user.getEmail(), user.getPassword(),
-                user.getParentId(), user.getRole(), user.isEnabled(), user.getRegistered(),
-                user.getModified());
+        this(user.getId(), user.getName(), user.getMiddleName(), user.getLastName(),
+                user.getEmail(), user.getPassword(), user.getParentId(), user.getRole(),
+                user.isEnabled(), user.getRegistered(), user.getModified());
     }
+
+    public String getMiddleName() { return middleName; }
+
+    public void setMiddleName(String middleName) { this.middleName = middleName; }
 
     public String getLastName() {
         return lastName;

@@ -2,20 +2,20 @@ package com.caesar_84.sellhelper.domain;
 
 import com.caesar_84.sellhelper.domain.basicabstracts.BaseEntity;
 
-public class GoodsStock extends BaseEntity {
+public class StockItems extends BaseEntity {
     private Good good;
 
     private int quantity;
 
     private User user;
 
-    public GoodsStock() {}
+    public StockItems() {}
 
-    public GoodsStock(Good good, int quantity, User user) {
+    public StockItems(Good good, int quantity, User user) {
         this(null, good, quantity, user);
     }
 
-    public GoodsStock(Integer id, Good good, int quantity, User user) {
+    public StockItems(Integer id, Good good, int quantity, User user) {
         super(id);
         this.good = good;
         this.quantity = quantity;

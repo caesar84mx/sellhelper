@@ -2,7 +2,14 @@ package com.caesar_84.sellhelper.domain.auxclasses;
 
 import com.caesar_84.sellhelper.domain.basicabstracts.BaseEntity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "addresses")
 public class Address extends BaseEntity {
+    @Column(name = "country", nullable = false)
     private String country;
 
     private String region;
