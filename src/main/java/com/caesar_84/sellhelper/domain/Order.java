@@ -24,7 +24,6 @@ public class Order extends BaseEntity {
     @NotNull
     private Address shipmentAddress;
 
-    //@OneToMany
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyJoinColumn(name = "good_id")
