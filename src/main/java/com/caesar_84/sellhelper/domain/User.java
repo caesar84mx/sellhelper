@@ -45,7 +45,7 @@ public class User extends NamedEntity {
     @Column(name = "enabled", columnDefinition = "boolean default true")
     private boolean enabled;
 
-    @Column(name = "registered", columnDefinition = "timestamp default now()")
+    @Column(name = "registered", columnDefinition = "timestamp default now()", updatable = false)
     private LocalDateTime registered = LocalDateTime.now();
 
     @Column(name = "modified", columnDefinition = "timestamp default now()")
@@ -72,6 +72,10 @@ public class User extends NamedEntity {
                 Roles role, boolean enabled, LocalDateTime registered, LocalDateTime modified) {
         this(null, middleName, name, lastName, email, password, parentId, role, enabled, registered,
                 modified);
+    }
+
+    public User(Integer id, String name, String middleName, String lastName, String email, String password, Integer parentId, Roles role, boolean enabled, LocalDateTime registered) {
+        this(id, name, middleName, lastName, email, password, parentId, role, enabled, registered, LocalDateTime.now());
     }
 
     public User(String name, String middleName, String lastName, String email, String password, Integer parentId,

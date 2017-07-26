@@ -6,6 +6,16 @@ DROP TABLE IF EXISTS addresses CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_items CASCADE;
 DROP TABLE IF EXISTS stock_items CASCADE;
+DROP SEQUENCE IF EXISTS hibernate_sequence;
+DROP SEQUENCE IF EXISTS addresses_id_seq;
+DROP SEQUENCE IF EXISTS clients_id_seq;
+DROP SEQUENCE IF EXISTS goods_id_seq;
+DROP SEQUENCE IF EXISTS orders_id_seq;
+DROP SEQUENCE IF EXISTS providers_id_seq;
+DROP SEQUENCE IF EXISTS stock_items_id_seq;
+DROP SEQUENCE IF EXISTS users_id_seq;
+
+CREATE SEQUENCE hibernate_sequence START 2;
 
 CREATE TABLE users
 (
