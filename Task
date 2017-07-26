@@ -2,8 +2,8 @@ Project "Sellhelper"
 
 Objective: help to internet sellers to perform their internet trading.
 
-Description: this is a REST application intended to help the sellers to perform their internet trading,
-as follows:
+Description: this is a REST application intended to help the sellers to perform their internet
+trading, as follows:
 - manage the stock;
 - manage the orders;
 - manage the list of clients and suppliers;
@@ -34,4 +34,7 @@ The admins can:
 - gather statistics on the operations result (total income), processed by this application;
 
 To post a user:
-curl -u "caesar.84@mail.ru":"password." -X POST -d '{"name":"Marcus", "lastName": "Brutus", "email":"brutus.84@word.ir", "password":"pass1234", "parentId":1, "role":"ROLE_USER"}' -H "Content-Type:application/json" http://localhost:8080/rest-api/v1/users
+curl -u "caesar.84@mail.ru":"password." -X POST -d '{"name":"Marcus", "middleName":"Junius",
+"lastName":"Brutus", "email":"brutus.84@word.ir", "password":"pass1234", "parentId":1,
+"role":"ROLE_USER"}' -H "Content-Type:application/json"
+http://localhost:8080/rest-api/v1/users

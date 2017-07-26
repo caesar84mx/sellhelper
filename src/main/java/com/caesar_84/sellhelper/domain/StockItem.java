@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "stock_items")
-public class StockItems extends BaseEntity {
+public class StockItem extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "good_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -25,13 +25,13 @@ public class StockItems extends BaseEntity {
     @NotNull
     private User user;
 
-    public StockItems() {}
+    public StockItem() {}
 
-    public StockItems(Good good, int quantity, User user) {
+    public StockItem(Good good, int quantity, User user) {
         this(null, good, quantity, user);
     }
 
-    public StockItems(Integer id, Good good, int quantity, User user) {
+    public StockItem(Integer id, Good good, int quantity, User user) {
         super(id);
         this.good = good;
         this.quantity = quantity;

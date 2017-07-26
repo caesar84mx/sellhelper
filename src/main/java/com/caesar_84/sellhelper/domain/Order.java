@@ -26,12 +26,9 @@ public class Order extends BaseEntity {
 
     //@OneToMany
     @ElementCollection(fetch = FetchType.EAGER)
-    @MapKeyColumn(name = "good_id")
+    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
+    @MapKeyJoinColumn(name = "good_id")
     @Column(name = "quantity")
-    @CollectionTable(name = "order_items", joinColumns = {
-            @JoinColumn(name = "order_id"),
-            /*@JoinColumn(name = "good_id")*/
-    })
     private Map<Good, Integer> goods;
 
     @ManyToOne

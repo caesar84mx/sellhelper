@@ -54,6 +54,7 @@ CREATE TABLE clients
   name          VARCHAR NOT NULL,
   middle_name   VARCHAR NOT NULL,
   last_name     VARCHAR NOT NULL,
+  contacts      VARCHAR NOT NULL,
   user_id       INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -105,4 +106,4 @@ CREATE TABLE stock_items
   FOREIGN KEY (good_id) REFERENCES goods(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-CREATE INDEX stock_items_idx ON stock_items(good_id);
+CREATE INDEX stock_items_idx ON stock_items(id, good_id, user_id);
