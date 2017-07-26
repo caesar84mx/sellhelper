@@ -3,23 +3,53 @@ package com.caesar_84.sellhelper.domain;
 import com.caesar_84.sellhelper.domain.auxclasses.Address;
 import com.caesar_84.sellhelper.domain.auxclasses.OrderStatus;
 import com.caesar_84.sellhelper.domain.basicabstracts.BaseEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+@Entity
+@Table(name = "orders")
 public class Order extends BaseEntity {
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    @NotNull
     private Client client;
 
+    @ManyToOne
+    @JoinColumn(name = "address_id", nullable = false)
+    @NotNull
     private Address shipmentAddress;
 
+    //@OneToMany
+    @ElementCollection(fetch = FetchType.EAGER)
+    @MapKeyColumn(name = "good_id")
+    @Column(name = "quantity")
+    @CollectionTable(name = "order_items", joinColumns = {
+            @JoinColumn(name = "order_id"),
+            /*@JoinColumn(name = "good_id")*/
+    })
     private Map<Good, Integer> goods;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private User user;
 
+    @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+    @NotNull
     private LocalDateTime created;
 
+    @Column(name = "modified", nullable = false, columnDefinition = "timestamp default now()")
+    @NotNull
     private LocalDateTime modified;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private OrderStatus status;
 
     public Order() {}

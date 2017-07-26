@@ -11,7 +11,7 @@ CREATE TABLE users
 (
   id          SERIAL PRIMARY KEY,
   name        VARCHAR NOT NULL,
-  middle_name VARCHAR NULL NOT NULL,
+  middle_name VARCHAR NOT NULL,
   last_name   VARCHAR NOT NULL,
   email       VARCHAR NOT NULL,
   password    VARCHAR NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE clients
   middle_name   VARCHAR NOT NULL,
   last_name     VARCHAR NOT NULL,
   user_id       INTEGER NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX clients_idx ON clients(name, last_name, user_id);
 
@@ -65,7 +65,9 @@ CREATE TABLE addresses
   country       VARCHAR NOT NULL,
   region        VARCHAR NOT NULL,
   location      VARCHAR NOT NULL,
-  details       VARCHAR NOT NULL
+  details       VARCHAR NOT NULL,
+  user_id       INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX addresses_idx ON addresses(country, region, location, details);
 
@@ -80,7 +82,7 @@ CREATE TABLE orders
   status        VARCHAR NOT NULL DEFAULT 'PENDING',
   FOREIGN KEY (client_id) REFERENCES clients(id),
   FOREIGN KEY (address_id) REFERENCES addresses(id),
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX orders_idx ON orders(client_id, user_id, created, modified, status);
 
@@ -92,6 +94,7 @@ CREATE TABLE order_items
   FOREIGN KEY (order_id) REFERENCES orders(id),
   FOREIGN KEY (good_id) REFERENCES goods(id)
 );
+CREATE INDEX order_items_idx ON order_items(order_id, good_id);
 
 CREATE TABLE stock_items
 (
@@ -99,7 +102,7 @@ CREATE TABLE stock_items
   good_id       INTEGER NOT NULL,
   quantity      INTEGER NOT NULL,
   user_id       INTEGER NOT NULL,
-  FOREIGN KEY (good_id) REFERENCES goods(id),
-  FOREIGN KEY (user_id) REFERENCES users(id)
+  FOREIGN KEY (good_id) REFERENCES goods(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX stock_items_idx ON stock_items(good_id);

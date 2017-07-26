@@ -1,16 +1,35 @@
 package com.caesar_84.sellhelper.domain;
 
 import com.caesar_84.sellhelper.domain.basicabstracts.NamedEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "goods")
 public class Good extends NamedEntity {
+    @Column(name = "serial_no", nullable = false)
+    @NotBlank
     private String serialNo;
 
+    @Column(name = "description", nullable = false)
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private User user;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "provider_id")
+    @NotNull
     private GoodsProvider provider;
 
+    @Column(name = "price", nullable = false)
     private int price;
 
     public Good() {}

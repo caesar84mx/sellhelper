@@ -1,14 +1,31 @@
 package com.caesar_84.sellhelper.domain;
 
 import com.caesar_84.sellhelper.domain.basicabstracts.NamedEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.NotBlank;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "clients")
 public class Client extends NamedEntity {
+    @Column(name = "middle_name")
     private String middleName;
 
+    @Column(name = "last_name", nullable = false)
+    @NotBlank
     private String lastName;
 
+    @Column(name = "contacts", nullable = false)
+    @NotBlank
     private String contacts;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private User user;
 
     public Client() {}
@@ -41,9 +58,7 @@ public class Client extends NamedEntity {
         return contacts;
     }
 
-    public void setContacts(String contacts) {
-        this.contacts = contacts;
-    }
+    public void setContacts(String contacts) { this.contacts = contacts; }
 
     public User getUser() {
         return user;

@@ -1,12 +1,28 @@
 package com.caesar_84.sellhelper.domain;
 
 import com.caesar_84.sellhelper.domain.basicabstracts.BaseEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name = "stock_items")
 public class StockItems extends BaseEntity {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "good_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Good good;
 
+    @Column(name = "quantity", nullable = false)
     private int quantity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private User user;
 
     public StockItems() {}
