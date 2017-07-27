@@ -18,6 +18,11 @@ public abstract class BaseEntity extends AbstractPersistable<Integer> implements
 
     public BaseEntity(Integer id) { setId(id); }
 
+    @Override
+    public void setId(Integer id) {
+        super.setId(id);
+    }
+
     @JsonIgnore
     public boolean isNew() { return super.isNew(); }
 }
