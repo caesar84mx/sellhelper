@@ -67,4 +67,16 @@ public class Client extends NamedEntity {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + this.getId() +
+                ", name='" + this.getName() + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", userId=" + user.getId() +
+                '}';
+    }
 }

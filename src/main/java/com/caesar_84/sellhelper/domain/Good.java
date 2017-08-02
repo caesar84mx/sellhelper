@@ -88,4 +88,17 @@ public class Good extends NamedEntity {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Good{" +
+                "id=" + this.getId() +
+                ", name='" + this.getName() + '\'' +
+                ", serialNo='" + serialNo + '\'' +
+                ", description='" + description + '\'' +
+                ", userId=" + user.getId() +
+                ", provider=" + provider +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -7,9 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderService {
-    Order save(Order order);
-
-    Order update(Order order);
+    Order saveOrUpdate(Order order);
 
     boolean delete(int id);
 

@@ -48,4 +48,14 @@ public class GoodsProvider extends NamedEntity {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsProvider{" +
+                "id=" + this.getId() +
+                ", name='" + this.getName() + '\'' +
+                ", contacts='" + contacts + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

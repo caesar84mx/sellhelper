@@ -84,4 +84,16 @@ public class Address extends BaseEntity {
     public User getUser() { return user; }
 
     public void setUser(User user) { this.user = user; }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + this.getId() +
+                "country='" + country + '\'' +
+                ", region='" + region + '\'' +
+                ", location='" + location + '\'' +
+                ", details='" + details + '\'' +
+                ", userId=" + user.getId() +
+                '}';
+    }
 }
