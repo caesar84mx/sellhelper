@@ -3,29 +3,21 @@ package com.caesar_84.sellhelper.service.order;
 import com.caesar_84.sellhelper.domain.Order;
 import com.caesar_84.sellhelper.domain.auxclasses.OrderStatus;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderService {
-    Order saveOrUpdate(Order order);
+    Order saveOrUpdate(Order order, int userId);
 
-    boolean delete(int id);
+    boolean delete(int id, int userId);
 
-    List<Order> getByStatus(OrderStatus status);
+    Order get(int id, int userId);
 
-    List<Order> getByStatusForUser(OrderStatus status, int id);
+    List<Order> getByClient(int clientId, int userId);
 
-    List<Order> getBetweenForCurrentUser(LocalDate start, LocalDate end);
+    List<Order> getByStatus(OrderStatus status, int userId);
 
-    List<Order> getBetweenForUser(LocalDate start, LocalDate end, int id);
+    List<Order> getBetween(LocalDateTime start, LocalDateTime end, int userId);
 
-    List<Order> getByDateForUser(LocalDate date, int id);
-
-    List<Order> getByDateForCurrentUser(LocalDate date);
-
-    List<Order> getByClient(int id);
-
-    List<Order> getAllForUser(int id);
-
-    List<Order> getAllForCurrentUser();
+    List<Order> getAll(int userId);
 }
