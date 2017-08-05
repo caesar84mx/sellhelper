@@ -22,21 +22,21 @@ public interface OrderRepository  extends JpaRepository<Order, Integer> {
     int deleteByUserId(@Param("order_id") int id, @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.status=:status AND o.user.id=:user_id")
+    @Query("SELECT o FROM Order o WHERE o.status=:status AND o.user.id=:user_id ORDER BY o.modified DESC")
     List<Order> getByStatusAndUserId(@Param("status") OrderStatus status,
                                      @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.id=:id AND o.created BETWEEN :start AND :end")
+    @Query("SELECT o FROM Order o WHERE o.id=:id AND o.created BETWEEN :start AND :end ORDER BY o.modified DESC")
     List<Order> getBetweenByUserId(@Param("start") LocalDateTime start,
                                    @Param("end") LocalDateTime end,
                                    @Param("id") int id);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id AND o.client.id=:client_id")
+    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id AND o.client.id=:client_id ORDER BY o.modified DESC")
     List<Order> getByClientAndUserId(@Param("client_id") int clientId, @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id")
+    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id ORDER BY o.modified DESC")
     List<Order> getAllByUserId(@Param("user_id") int userId);
 }

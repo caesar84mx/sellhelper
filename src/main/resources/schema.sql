@@ -52,7 +52,7 @@ CREATE TABLE goods
   description  VARCHAR NOT NULL,
   user_id      INTEGER NOT NULL,
   provider_id  INTEGER NOT NULL,
-  price        INTEGER NOT NULL,
+  price        INTEGER NOT NULL CHECK (price > 0),
   FOREIGN KEY (user_id) REFERENCES users(id),
   FOREIGN KEY (provider_id) REFERENCES providers(id)
 );
@@ -101,9 +101,9 @@ CREATE TABLE order_items
 (
   order_id      INTEGER NOT NULL,
   good_id       INTEGER NOT NULL,
-  quantity      INTEGER NOT NULL,
-  FOREIGN KEY (order_id) REFERENCES orders(id),
-  FOREIGN KEY (good_id) REFERENCES goods(id)
+  quantity      INTEGER NOT NULL CHECK (quantity > 0),
+  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+  FOREIGN KEY (good_id) REFERENCES goods(id) ON DELETE RESTRICT
 );
 CREATE INDEX order_items_idx ON order_items(order_id, good_id);
 
@@ -111,7 +111,7 @@ CREATE TABLE stock_items
 (
   id            SERIAL PRIMARY KEY,
   good_id       INTEGER NOT NULL,
-  quantity      INTEGER NOT NULL,
+  quantity      INTEGER NOT NULL CHECK (quantity >= 0),
   user_id       INTEGER NOT NULL,
   FOREIGN KEY (good_id) REFERENCES goods(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

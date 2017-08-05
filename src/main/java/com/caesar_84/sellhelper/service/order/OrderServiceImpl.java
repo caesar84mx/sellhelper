@@ -39,8 +39,6 @@ public class OrderServiceImpl implements OrderService {
 
     private Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
-    @Secured("ROLE_USER")
-    @Transactional
     @Override
     public Order saveOrUpdate(Order order, int userId) {
         if (order.isNew()) {
@@ -50,8 +48,6 @@ public class OrderServiceImpl implements OrderService {
         return update(order, userId);
     }
 
-    @Secured("ROLE_USER")
-    @Transactional
     @Override
     public boolean delete(int id, int userId) {
         logger.info("Deleting order {0} of user {1}", id, userId);
