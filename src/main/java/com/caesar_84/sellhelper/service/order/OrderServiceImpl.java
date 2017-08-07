@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean delete(int id, int userId) {
-        logger.info("Deleting order {0} of user {1}", id, userId);
+        logger.info("Deleting order {} of user {}", id, userId);
 
         return orderRepository.delete(id, userId) != 0;
     }
@@ -64,32 +64,32 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getByStatus(OrderStatus status, int userId) {
-        logger.info("Getting orders by status {0} for user {1}", status, userId);
+        logger.info("Getting orders by status {} for user {}", status, userId);
         return orderRepository.getByStatus(status, userId);
     }
 
     @Override
     public List<Order> getBetween(LocalDateTime start, LocalDateTime end, int userId) {
-        logger.info("Getting orders for period {0} - {1} for user {2}", start, end, userId);
+        logger.info("Getting orders for period {} - {} for user {}", start, end, userId);
         return orderRepository.getBetween(start, end, userId);
     }
 
     @Override
     public List<Order> getByClient(int clientId, int userId) {
-        logger.info("Getting orders by client {0} for logged user {1}", clientId, userId);
+        logger.info("Getting orders by client {} for logged user {}", clientId, userId);
         return orderRepository.getByClient(clientId, userId);
     }
 
     @Override
     public List<Order> getAll(int userId) {
-        logger.info("Getting orders for user {0}", userId);
+        logger.info("Getting orders for user {}", userId);
         return orderRepository.getAll(userId);
     }
 
     //Auxiliary methods
 
     private Order save(Order order, int userId) {
-        logger.debug("Saving order {0} for user {1}", order, userId);
+        logger.debug("Saving order {} for user {}", order, userId);
 
         //Let's check first if this order belongs to a logged user, ...
         CheckUtil.checkUserIdConsistent(order.getUser(), userId);
@@ -119,7 +119,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private Order update(Order order, int userId) {
-        logger.debug("Updating order {0} for user {1}", order.getId(), userId);
+        logger.debug("Updating order {} for user {}", order.getId(), userId);
 
         //Check that the order's user coincides with the logged one
         CheckUtil.checkUserIdConsistent(order.getUser(), userId);
@@ -203,15 +203,13 @@ public class OrderServiceImpl implements OrderService {
             StockItem stockItem = stockItemsService.get(good.getId(), userId);
             CheckUtil.checkNotNull(stockItem);
 
-            logger.info("Updating stock");
-
             //And then, update the stock
             //If the resulting quantity is below zero, it will throw an exception
             //As implemented in StockServiceImpl
             stockItem.setQuantity(stockItem.getQuantity() - quantity);
             stockItemsService.saveOrUpdate(stockItem, userId);
 
-            logger.info("Stock updated");
+            logger.debug("Stock updated");
         });
     }
 }
