@@ -10,11 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
+    @Transactional(readOnly = true)
+    @Query("SELECT a FROM Address a WHERE a.id=:id AND a.user.id=:user_id")
+    Address get(@Param("id") int id, @Param("user_id") int userId);
+
     @Transactional
     @Modifying
     @Query("DELETE FROM Address a WHERE a.id=:id AND a.user.id=:user_id")
     int delete(@Param("id") int id, @Param("user_id") int userId);
 
+    @Transactional(readOnly = true)
     @Query("SELECT a FROM Address a WHERE a.user.id=:user_id ORDER BY a.country, a.location ASC")
     List<Address> getAll(@Param("user_id") int userId);
 }

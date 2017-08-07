@@ -4,9 +4,11 @@ import com.caesar_84.sellhelper.domain.auxclasses.Address;
 import com.caesar_84.sellhelper.repository.AddressRepository;
 import com.caesar_84.sellhelper.util.CheckUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressRepository addressRepository;
@@ -19,12 +21,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address get(int id, int userId) {
-        Address address = addressRepository.findOne(id);
-        CheckUtil.checkUserIdConsistent(address.getUser(), userId);
-
-        return address;
-    }
+    public Address get(int id, int userId) { return addressRepository.get(id, userId); }
 
     @Override
     public boolean delete(int id, int userId) {
