@@ -1,11 +1,13 @@
+-- password: "password."
 INSERT INTO users (name, middle_name, last_name, email, password, parent_id, role)
 VALUES ('Julius', 'Gaius', 'Caesar', 'caesar.84@mail.ru',
         '$2a$10$Tuv71UT5hKQIpaMkdEvZ9e8HVzrkd.WwSqV41jzZS32KhQS3Uvp4y',
         NULL, 'ROLE_ADMIN');
 
+-- password: "passcode"
 INSERT INTO users (name, middle_name, last_name, email, password, parent_id, role)
 VALUES ('Marcus', 'Junius', 'Brutus', 'brutus.84@word.ir',
-        '$2a$10$mC95tSb.aDtb4qH20Gz9IOk19jHSeemwIr8l9yXcu7KSStMdHj3Fi',
+        '$2a$10$EkudTF0DANlCMzBpU/t7xuJ2TxfuuAQRyTlUJY7xobXOI4dtNhiqW',
         1, 'ROLE_USER');
 
 INSERT INTO providers (name, contacts, user_id)
