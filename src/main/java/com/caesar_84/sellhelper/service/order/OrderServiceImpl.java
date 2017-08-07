@@ -8,6 +8,9 @@ import com.caesar_84.sellhelper.repository.AddressRepository;
 import com.caesar_84.sellhelper.repository.ClientRepository;
 import com.caesar_84.sellhelper.repository.OrderRepository;
 import com.caesar_84.sellhelper.repository.StockItemsRepository;
+import com.caesar_84.sellhelper.service.address.AddressService;
+import com.caesar_84.sellhelper.service.client.ClientService;
+import com.caesar_84.sellhelper.service.stock.StockService;
 import com.caesar_84.sellhelper.util.CheckUtil;
 import com.caesar_84.sellhelper.util.exceptions.NotEnoughItemsException;
 import com.caesar_84.sellhelper.util.exceptions.WrongDateTimeException;
@@ -28,13 +31,13 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
-    private AddressRepository addressRepository;
+    private AddressService addressService;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
-    private StockItemsRepository stockItemsRepository;
+    private StockService stockItemsService;
 
     private Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
@@ -104,12 +107,12 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //Update the stock
-        updateStock(order.getGoods());
+        updateStock(order.getGoods(), userId);
 
         //Save the order's entity parts and reassign them
         logger.debug("Saving orders client and shipment address");
-        order.setClient(clientRepository.save(order.getClient()));
-        order.setShipmentAddress(addressRepository.save(order.getShipmentAddress()));
+        order.setClient(clientService.saveOrUpdate(order.getClient(), userId));
+        order.setShipmentAddress(addressService.saveOrUpdate(order.getShipmentAddress(), userId));
 
         //And save and return the order
         return orderRepository.save(order);
@@ -152,17 +155,18 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //Compare and update the stock
-        compareAndUpdateStock(order.getGoods(), existentOrder.getGoods());
+        compareAndUpdateStock(order.getGoods(), existentOrder.getGoods(), userId);
 
+        //Set new modification date and time
         order.setModified(LocalDateTime.now());
 
         return orderRepository.save(order);
     }
 
-    private void compareAndUpdateStock(Map<Good, Integer> newItems, Map<Good, Integer> oldItems) {
+    private void compareAndUpdateStock(Map<Good, Integer> newItems, Map<Good, Integer> oldItems, int userId) {
         newItems.forEach((good, quantity) -> {
             //See if there is such item in the store
-            StockItem stockItem = stockItemsRepository.findOne(good.getId());
+            StockItem stockItem = stockItemsService.get(good.getId(), userId);
             CheckUtil.checkNotNull(stockItem);
 
             //If the item is already contained in the old order
@@ -172,53 +176,40 @@ public class OrderServiceImpl implements OrderService {
 
                 //If the quantity was changed
                 if (delta != 0) {
-                    //If there are no enough items in the store, throw an exception
-                    if (stockItem.getQuantity() - delta < 0) {
-                        throw new NotEnoughItemsException("You have no enough items " +
-                                "in the store!");
-                    } else {
-                        //Else subtract the delta from the stock item quantity
-                        //and assign it a new quantity value
-                        stockItem.setQuantity(stockItem.getQuantity() - delta);
-                    }
+                    //If there are no enough items in the store, it will throw an exception
+                    //This is implemented in StockServiceImpl
+                    //So, we subtract the delta from the stock item quantity
+                    //and assign it a new quantity value
+                    stockItem.setQuantity(stockItem.getQuantity() - delta);
                 }
                 //If the item is not contained in the old order
             } else {
-                //If there are no enough items in the store, throw an exception
-                if (stockItem.getQuantity() - quantity < 0) {
-                    throw new NotEnoughItemsException("You have no enough items " +
-                            "in the store!");
-                } else {
-                    //Else subtract the retrieving quantity from the stock
-                    //and assign a new quantity value to the stock item
-                    stockItem.setQuantity(stockItem.getQuantity() - quantity);
-                }
+                //If there are no enough items in the store, it will throw an exception
+                //This is implemented in StockServiceImpl
+                //So, we subtract the retrieving quantity from the stock
+                //and assign a new quantity value to the stock item
+                stockItem.setQuantity(stockItem.getQuantity() - quantity);
             }
             //And save the item in the store
-            stockItemsRepository.save(stockItem);
+            stockItemsService.saveOrUpdate(stockItem, userId);
         });
     }
 
-    private void updateStock(Map<Good, Integer> orderItems) {
+    private void updateStock(Map<Good, Integer> orderItems, int userId) {
         logger.debug("Updating stock");
 
         orderItems.forEach((good, quantity) -> {
             //Let's check if the item exists in the stock
-            StockItem stockItem = stockItemsRepository.getOne(good.getId());
+            StockItem stockItem = stockItemsService.get(good.getId(), userId);
             CheckUtil.checkNotNull(stockItem);
-
-            //If there are no enough items in the user's stock, throw an exception
-            if (stockItem.getQuantity() - quantity < 0) {
-                logger.error("Not enough items in the stock!");
-                throw new NotEnoughItemsException("You don't have enough items \"" +
-                        stockItem.getGood().getName() + "\" in your stock!");
-            }
 
             logger.info("Updating stock");
 
             //And then, update the stock
+            //If the resulting quantity is below zero, it will throw an exception
+            //As implemented in StockServiceImpl
             stockItem.setQuantity(stockItem.getQuantity() - quantity);
-            stockItemsRepository.save(stockItem);
+            stockItemsService.saveOrUpdate(stockItem, userId);
 
             logger.info("Stock updated");
         });
