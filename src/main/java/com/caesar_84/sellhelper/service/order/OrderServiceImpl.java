@@ -14,7 +14,6 @@ import com.caesar_84.sellhelper.util.exceptions.WrongDateTimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,36 +51,36 @@ public class OrderServiceImpl implements OrderService {
     public boolean delete(int id, int userId) {
         logger.info("Deleting order {0} of user {1}", id, userId);
 
-        return orderRepository.deleteByUserId(id, userId) != 0;
+        return orderRepository.delete(id, userId) != 0;
     }
 
     @Override
     public Order get(int id, int userId) {
-        return orderRepository.getForUserById(id, userId);
+        return orderRepository.get(id, userId);
     }
 
     @Override
     public List<Order> getByStatus(OrderStatus status, int userId) {
         logger.info("Getting orders by status {0} for user {1}", status, userId);
-        return orderRepository.getByStatusAndUserId(status, userId);
+        return orderRepository.getByStatus(status, userId);
     }
 
     @Override
     public List<Order> getBetween(LocalDateTime start, LocalDateTime end, int userId) {
         logger.info("Getting orders for period {0} - {1} for user {2}", start, end, userId);
-        return orderRepository.getBetweenByUserId(start, end, userId);
+        return orderRepository.getBetween(start, end, userId);
     }
 
     @Override
     public List<Order> getByClient(int clientId, int userId) {
         logger.info("Getting orders by client {0} for logged user {1}", clientId, userId);
-        return orderRepository.getByClientAndUserId(clientId, userId);
+        return orderRepository.getByClient(clientId, userId);
     }
 
     @Override
     public List<Order> getAll(int userId) {
         logger.info("Getting orders for user {0}", userId);
-        return orderRepository.getAllByUserId(userId);
+        return orderRepository.getAll(userId);
     }
 
     //Auxiliary methods

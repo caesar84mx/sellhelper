@@ -4,7 +4,6 @@ import com.caesar_84.sellhelper.domain.auxclasses.Address;
 import com.caesar_84.sellhelper.repository.AddressRepository;
 import com.caesar_84.sellhelper.util.CheckUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 
 import java.util.List;
 
@@ -29,11 +28,11 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public boolean delete(int id, int userId) {
-        return addressRepository.deleteByUserId(id, userId) != 0;
+        return addressRepository.delete(id, userId) != 0;
     }
 
     @Override
     public List<Address> getAll(int userId) {
-        return addressRepository.getAllByUserId(userId);
+        return addressRepository.getAll(userId);
     }
 }

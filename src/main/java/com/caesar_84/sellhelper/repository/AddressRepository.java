@@ -13,8 +13,8 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
     @Transactional
     @Modifying
     @Query("DELETE FROM Address a WHERE a.id=:id AND a.user.id=:user_id")
-    int deleteByUserId(@Param("id") int id, @Param("user_id") int userId);
+    int delete(@Param("id") int id, @Param("user_id") int userId);
 
     @Query("SELECT a FROM Address a WHERE a.user.id=:user_id ORDER BY a.country, a.location ASC")
-    List<Address> getAllByUserId(@Param("user_id") int userId);
+    List<Address> getAll(@Param("user_id") int userId);
 }

@@ -1,11 +1,11 @@
 package com.caesar_84.sellhelper.service.stock;
 
 import com.caesar_84.sellhelper.domain.StockItem;
-import com.caesar_84.sellhelper.repository.GoodsProviderRepository;
 import com.caesar_84.sellhelper.repository.StockItemsRepository;
 import com.caesar_84.sellhelper.service.good.GoodService;
 import com.caesar_84.sellhelper.service.provider.ProviderService;
 import com.caesar_84.sellhelper.util.CheckUtil;
+import com.caesar_84.sellhelper.util.exceptions.NotEnoughItemsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,11 @@ public class StockServiceImpl implements StockService {
     @Override
     public StockItem saveOrUpdate(StockItem item, int userId) {
         CheckUtil.checkUserIdConsistent(item.getUser(), userId);
+
+        if (item.getQuantity() < 0) {
+            throw new NotEnoughItemsException("The quantity value can not be negative!");
+        }
+
         providerService.saveOrUpdate(item.getGood().getProvider(), userId);
         goodsService.saveOrUpdate(item.getGood(), userId);
 
@@ -37,16 +42,16 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public StockItem get(int id, int userId) {
-        return stockItemsRepository.getByUserId(id, userId);
+        return stockItemsRepository.get(id, userId);
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return stockItemsRepository.deleteByUserId(id, userId) != 0;
+        return stockItemsRepository.delete(id, userId) != 0;
     }
 
     @Override
     public List<StockItem> getAll(int userId) {
-        return stockItemsRepository.getAllByUserId(userId);
+        return stockItemsRepository.getAll(userId);
     }
 }

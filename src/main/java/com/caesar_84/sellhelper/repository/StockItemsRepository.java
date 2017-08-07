@@ -10,14 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface StockItemsRepository extends JpaRepository<StockItem, Integer> {
+    @Transactional(readOnly = true)
     @Query("SELECT i FROM StockItem i WHERE i.id=:item_id AND i.user.id=:user_id")
-    StockItem getByUserId(@Param("item_id") int id, @Param("user_id") int userId);
+    StockItem get(@Param("item_id") int id, @Param("user_id") int userId);
 
     @Transactional
     @Modifying
     @Query("DELETE FROM StockItem i WHERE i.id=:item_id AND i.user.id=:user_id")
-    int deleteByUserId(@Param("item_id") int id, @Param("user_id") int userId);
+    int delete(@Param("item_id") int id, @Param("user_id") int userId);
 
+    @Transactional(readOnly = true)
     @Query("SELECT i FROM StockItem i WHERE i.user.id=:user_id")
-    List<StockItem> getAllByUserId(@Param("user_id") int userId);
+    List<StockItem> getAll(@Param("user_id") int userId);
 }
