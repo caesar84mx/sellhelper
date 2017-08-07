@@ -8,13 +8,13 @@ import java.util.Collections;
 import java.util.Objects;
 
 public class LoggedUser extends User {
-    private static Integer id;
+    private com.caesar_84.sellhelper.domain.User referredUser;
 
     public LoggedUser(com.caesar_84.sellhelper.domain.User user) {
         super(user.getEmail(), user.getPassword(), user.isEnabled(),
                 true, true, true,
                 Collections.singletonList(user.getRole()));
-        id = user.getId();
+        referredUser = user;
     }
 
     private static LoggedUser safeGet() {
@@ -33,7 +33,13 @@ public class LoggedUser extends User {
         return user;
     }
 
+    public com.caesar_84.sellhelper.domain.User getReferredUser() {
+        return referredUser;
+    }
+
+    public Integer getId() { return referredUser.getId(); }
+
     public static Integer id() {
-        return id;
+        return get().referredUser.getId();
     }
 }
