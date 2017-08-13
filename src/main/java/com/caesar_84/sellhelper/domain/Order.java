@@ -40,7 +40,7 @@ public class Order extends BaseEntity {
     @NotNull
     private LocalDateTime created;
 
-    @Column(name = "modified", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "modified", nullable = false, columnDefinition = "timestamp default now() on update now()")
     @NotNull
     private LocalDateTime modified;
 

@@ -29,15 +29,4 @@ public final class CheckUtil {
             throw new IllegalArgumentException("The entity is null!");
         }
     }
-
-    public static boolean onlyStatusChanged(Order order1, Order order2) {
-
-        return order1.getId().equals(order2.getId()) &&
-                order1.getClient().equals(order2.getClient()) &&
-                order1.getShipmentAddress().equals(order2.getShipmentAddress()) &&
-                order1.getGoods().entrySet().containsAll(order2.getGoods().entrySet()) &&
-                order1.getUser().equals(order2.getUser()) &&
-                order1.getCreated().equals(order2.getCreated()) &&
-                order1.getStatus() != order2.getStatus();
-    }
 }

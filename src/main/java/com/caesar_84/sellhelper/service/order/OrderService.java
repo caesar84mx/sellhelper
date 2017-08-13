@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderService extends CommonCrudService<Order> {
+    boolean changeStatus(int id, int userId, OrderStatus status);
+
     List<Order> getByClient(int clientId, int userId);
 
     List<Order> getByStatus(OrderStatus status, int userId);

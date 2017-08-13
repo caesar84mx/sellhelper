@@ -63,6 +63,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public boolean changeStatus(int id, int userId, OrderStatus status) {
+        return orderRepository.changeStatus(id, userId, status) != 0;
+    }
+
+    @Override
     public List<Order> getByStatus(OrderStatus status, int userId) {
         logger.info("Getting orders by status {} for user {}", status, userId);
         return orderRepository.getByStatus(status, userId);
@@ -131,12 +136,6 @@ public class OrderServiceImpl implements OrderService {
         //Check if order has not changed
         if (order.equals(existentOrder)) {
             return order;
-        }
-
-        //Check if only status has changed
-        if (CheckUtil.onlyStatusChanged(order, existentOrder)) {
-            order.setModified(LocalDateTime.now());
-            return orderRepository.save(order);
         }
 
         //Check that the both orders are at PENDING status

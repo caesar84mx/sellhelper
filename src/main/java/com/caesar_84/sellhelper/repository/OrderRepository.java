@@ -23,6 +23,13 @@ public interface OrderRepository  extends JpaRepository<Order, Integer> {
     @Query("DELETE FROM Order o WHERE o.id=:order_id AND o.user.id=:user_id")
     int delete(@Param("order_id") int id, @Param("user_id") int userId);
 
+    @Transactional
+    @Modifying
+    @Query("UPDATE Order o SET o.status=:status WHERE o.id=:id AND o.user.id=:user_id")
+    int changeStatus(@Param("id") int id,
+                     @Param("user_id") int userId,
+                     @Param("status") OrderStatus status);
+
     @Transactional(readOnly = true)
     @Query("SELECT o FROM Order o WHERE o.status=:status AND o.user.id=:user_id ORDER BY o.modified DESC")
     List<Order> getByStatus(@Param("status") OrderStatus status,

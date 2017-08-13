@@ -47,6 +47,15 @@ public class ProfileOrdersController extends AbstractCommonCrudController<Order>
         return ResponseEntity.created(uri).body(saved);
     }
 
+    @PutMapping
+    public ResponseEntity changeStatus(@RequestParam(value = "id") int id,
+                                       @RequestParam(value = "status") OrderStatus status) {
+        String headerMsg = service.changeStatus(id, LoggedUser.id(), status) ?
+                "Status changed" : "Failed changing status";
+
+        return ResponseEntity.ok().header(headerMsg).build();
+    }
+
     @GetMapping
     public List<Order> getAll() {
         return super.getAll(LoggedUser.id());
