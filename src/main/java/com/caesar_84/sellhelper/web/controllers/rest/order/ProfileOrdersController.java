@@ -7,8 +7,10 @@ import com.caesar_84.sellhelper.service.CommonCrudService;
 import com.caesar_84.sellhelper.service.order.OrderService;
 import com.caesar_84.sellhelper.web.controllers.AbstractCommonCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -47,13 +49,13 @@ public class ProfileOrdersController extends AbstractCommonCrudController<Order>
         return ResponseEntity.created(uri).body(saved);
     }
 
-    @PutMapping
+    @PutMapping(value = "/change-status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity changeStatus(@RequestParam(value = "id") int id,
-                                       @RequestParam(value = "status") OrderStatus status) {
-        String headerMsg = service.changeStatus(id, LoggedUser.id(), status) ?
-                "Status changed" : "Failed changing status";
-
-        return ResponseEntity.ok().header(headerMsg).build();
+                                       @RequestParam(value = "status") String status,
+                                       @AuthenticationPrincipal LoggedUser loggedUser) {
+        return service.changeStatus(id, loggedUser.getId(), OrderStatus.valueOf(status)) ?
+                ResponseEntity.status(HttpStatus.OK).header("Status changed").build() :
+                ResponseEntity.status(HttpStatus.NOT_MODIFIED).header("Failed changing status").build();
     }
 
     @GetMapping

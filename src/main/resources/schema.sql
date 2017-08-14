@@ -6,6 +6,8 @@ DROP TABLE IF EXISTS addresses CASCADE;
 DROP TABLE IF EXISTS orders CASCADE;
 DROP TABLE IF EXISTS order_items CASCADE;
 DROP TABLE IF EXISTS stock_items CASCADE;
+DROP TRIGGER IF EXISTS orders_modified_modtime ON orders CASCADE;
+DROP FUNCTION IF EXISTS on_mod_update_modified_column() CASCADE;
 DROP SEQUENCE IF EXISTS hibernate_sequence;
 DROP SEQUENCE IF EXISTS addresses_id_seq;
 DROP SEQUENCE IF EXISTS clients_id_seq;
@@ -16,6 +18,15 @@ DROP SEQUENCE IF EXISTS stock_items_id_seq;
 DROP SEQUENCE IF EXISTS users_id_seq;
 
 CREATE SEQUENCE hibernate_sequence START 2;
+
+CREATE OR REPLACE FUNCTION on_mod_update_modified_column() RETURNS TRIGGER
+LANGUAGE plpgsql
+AS '
+BEGIN
+  new.modified := now();
+  RETURN new;
+END;
+';
 
 CREATE TABLE users
 (
@@ -33,6 +44,10 @@ CREATE TABLE users
 );
 CREATE INDEX user_idx ON users(name, last_name, registered, modified, parent_id, role);
 CREATE UNIQUE INDEX user_uidx ON users(email);
+
+CREATE TRIGGER users_modified_modtime
+BEFORE UPDATE ON users FOR EACH ROW
+EXECUTE PROCEDURE on_mod_update_modified_column();
 
 CREATE TABLE providers
 (
@@ -96,6 +111,10 @@ CREATE TABLE orders
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 CREATE INDEX orders_idx ON orders(client_id, user_id, created, modified, status);
+
+CREATE TRIGGER orders_modified_modtime
+BEFORE UPDATE ON orders FOR EACH ROW
+EXECUTE PROCEDURE on_mod_update_modified_column();
 
 CREATE TABLE order_items
 (
