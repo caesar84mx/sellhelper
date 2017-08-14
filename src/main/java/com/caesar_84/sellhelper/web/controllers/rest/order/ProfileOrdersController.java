@@ -49,8 +49,8 @@ public class ProfileOrdersController extends AbstractCommonCrudController<Order>
         return ResponseEntity.created(uri).body(saved);
     }
 
-    @PutMapping(value = "/change-status", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity changeStatus(@RequestParam(value = "id") int id,
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity changeStatus(@PathVariable("id") int id,
                                        @RequestParam(value = "status") String status,
                                        @AuthenticationPrincipal LoggedUser loggedUser) {
         return service.changeStatus(id, loggedUser.getId(), OrderStatus.valueOf(status)) ?

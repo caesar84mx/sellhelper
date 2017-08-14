@@ -36,8 +36,8 @@ The admins can:
 - To post a new user:
 curl -u "caesar.84@mail.ru":"password." -X POST -d '{"name":"Marcus", "middleName":"Junius", "lastName":"Brutus", "email":"brutus.84@word.ir", "password":"pass1234", "parentId":1, "role":"ROLE_USER"}' -H "Content-Type:application/json" http://localhost:8080/rest-api/v1/users
 
-- To change his fields:
+- To change user's fields:
 curl -u "caesar.84@mail.ru":"password." -X POST -d '{"id" : 2, "name" : "Marcus", "middleName" : "Junius", "lastName" : "Brutus", "email" : "brutus.84@word.ir", "password" : "$2a$10$ovnsbwXAKZLwbwrhI7SasO0f3n98kYbkjv2IwP2UtrUSH21y/5PBy", "parentId" : 1, "role" : "ROLE_USER", "enabled" : true, "registered" : "2017-07-25T23:35:49.523"}' -H "Content-Type:application/json" http://localhost:8080/rest-api/v1/users
 
 - To change the order's status:
-curl -u "brutus.84@word.ir":"passcode" -X PUT -d id=1 -d status="DELIVERED" http://localhost:8080/rest-api/v1/orders/change-status
+curl -u "brutus.84@word.ir":"passcode" -X PUT -d status="DELIVERED" http://localhost:8080/rest-api/v1/orders/1

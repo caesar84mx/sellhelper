@@ -16,7 +16,7 @@ public class ProfileUserController {
     @Autowired
     private UserRepository repository;
 
-    static final String REST_URL = "/rest-api/v1/profile";
+    static final String REST_URL = "/rest-api/v1/profile/self";
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> post(@RequestBody User user, @AuthenticationPrincipal LoggedUser loggedUser) {

@@ -59,11 +59,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order get(int id, int userId) {
+        logger.info("User {} is trying to get an order {}", userId, id);
         return orderRepository.get(id, userId);
     }
 
     @Override
     public boolean changeStatus(int id, int userId, OrderStatus status) {
+        logger.info("User {} is changing status on order {} to {}", userId, id, status);
         return orderRepository.changeStatus(id, userId, status) != 0;
     }
 
