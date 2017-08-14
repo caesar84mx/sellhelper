@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(value = ProfileClientsController.REST_URL,
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileClientsController extends AbstractCommonCrudController<Client> {
-    static final String REST_URL = "/rest-api/v1/clients";
+    static final String REST_URL = AbstractCommonCrudController.BASE_URL + "/clients";
 
     @Autowired
     public ProfileClientsController(CommonCrudService<Client> commonCrudService) {

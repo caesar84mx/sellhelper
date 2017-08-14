@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = ProfileOrdersController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileOrdersController extends AbstractCommonCrudController<Order> {
-    static final String REST_URL = "/rest-api/v1/orders";
+    static final String REST_URL = AbstractCommonCrudController.BASE_URL + "/orders";
 
     @Autowired
     private OrderService service;
