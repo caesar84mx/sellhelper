@@ -19,7 +19,7 @@ public class StockItem extends BaseEntity {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull

@@ -30,7 +30,7 @@ public class Order extends BaseEntity {
     @Column(name = "quantity")
     private Map<Good, Integer> goods;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
