@@ -27,7 +27,7 @@ public class AdminClientController extends AbstractCommonCrudController<Client> 
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
+    @GetMapping("/all")
     public List<Client> getAll(@PathVariable("user") int userId) {
         return super.getAll(userId);
     }

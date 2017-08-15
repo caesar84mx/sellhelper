@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = ProfileStockController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileStockController extends AbstractCommonCrudController<StockItem> {
-    static final String REST_URL = AbstractCommonCrudController.BASE_URL + "/stockItems";
+    static final String REST_URL = AbstractCommonCrudController.BASE_URL + "/stock";
 
     @Autowired
     public ProfileStockController(CommonCrudService<StockItem> commonCrudService) {

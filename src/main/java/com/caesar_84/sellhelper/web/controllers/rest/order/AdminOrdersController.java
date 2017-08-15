@@ -38,7 +38,7 @@ public class AdminOrdersController extends AbstractCommonCrudController<Order> {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
+    @GetMapping("/all")
     public List<Order> getAll(@PathVariable("user") int userId) {
         return super.getAll(userId);
     }

@@ -28,7 +28,7 @@ public class AdminProvidersController extends AbstractCommonCrudController<Goods
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
+    @GetMapping("/all")
     public List<GoodsProvider> getAll(@PathVariable("user") int userId) {
         return super.getAll(userId);
     }

@@ -27,13 +27,13 @@ public class AdminUserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
+    @GetMapping("/all")
     public List<User> getAll() {
         return repository.findAll();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping(value = "/{user}")
+    @PutMapping(value = "/{user}/enable")
     public ResponseEntity enable(@PathVariable("user") int userId,
                                  @RequestParam(value = "enable") boolean enable) {
 

@@ -1,6 +1,6 @@
-package com.caesar_84.sellhelper.web.controllers.rest.good;
+package com.caesar_84.sellhelper.web.controllers.rest.stock;
 
-import com.caesar_84.sellhelper.domain.Good;
+import com.caesar_84.sellhelper.domain.StockItem;
 import com.caesar_84.sellhelper.service.CommonCrudService;
 import com.caesar_84.sellhelper.web.controllers.AbstractCommonCrudController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = AdminGoodsController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminGoodsController extends AbstractCommonCrudController<Good> {
-    static final String REST_URL = AbstractCommonCrudController.BASE_URL + "/admin/{user}/goods";
+@RequestMapping(value = AdminStockController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminStockController extends AbstractCommonCrudController<StockItem> {
+    static final String REST_URL = AbstractCommonCrudController.BASE_URL + "/admin/{user}/stock";
 
     @Autowired
-    public AdminGoodsController(CommonCrudService<Good> commonCrudService) {
+    public AdminStockController(CommonCrudService<StockItem> commonCrudService) {
         super(commonCrudService);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
-    public Good get(@RequestParam(value = "id") int id, @PathVariable("user") int userId) {
+    public StockItem get(@RequestParam(value = "id") int id, @PathVariable("user") int userId) {
         return super.get(id, userId);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
-    public List<Good> getAll(@PathVariable("user") int userId) {
+    public List<StockItem> getAll(@PathVariable("user") int userId) {
         return super.getAll(userId);
     }
 }

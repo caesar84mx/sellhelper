@@ -28,7 +28,7 @@ public class AdminAddressController extends AbstractCommonCrudController<Address
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping
+    @GetMapping("/all")
     public List<Address> getAll(@PathVariable("user") int userId) {
         return super.getAll(userId);
     }
