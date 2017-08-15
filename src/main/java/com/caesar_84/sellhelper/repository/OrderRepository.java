@@ -36,10 +36,10 @@ public interface OrderRepository  extends JpaRepository<Order, Integer> {
                             @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.id=:id AND o.created BETWEEN :start AND :end ORDER BY o.modified DESC")
+    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id AND o.created BETWEEN :start AND :end ORDER BY o.modified DESC")
     List<Order> getBetween(@Param("start") LocalDateTime start,
                            @Param("end") LocalDateTime end,
-                           @Param("id") int id);
+                           @Param("user_id") int id);
 
     @Transactional(readOnly = true)
     @Query("SELECT o FROM Order o WHERE o.user.id=:user_id AND o.client.id=:client_id ORDER BY o.modified DESC")
