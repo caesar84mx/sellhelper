@@ -39,8 +39,8 @@ CREATE TABLE users
   parent_id   INTEGER DEFAULT NULL,
   role        VARCHAR NOT NULL DEFAULT 'ROLE_USER',
   enabled     BOOLEAN NOT NULL DEFAULT TRUE,
-  registered  DATE NOT NULL DEFAULT now(),
-  modified    DATE NOT NULL DEFAULT now()
+  registered  TIMESTAMP NOT NULL DEFAULT now(),
+  modified    TIMESTAMP NOT NULL DEFAULT now()
 );
 CREATE INDEX user_idx ON users(name, last_name, registered, modified, parent_id, role);
 CREATE UNIQUE INDEX user_uidx ON users(email);
