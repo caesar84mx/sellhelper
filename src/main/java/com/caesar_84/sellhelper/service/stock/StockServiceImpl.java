@@ -28,7 +28,10 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public StockItem saveOrUpdate(StockItem item, int userId) {
-        CheckUtil.checkUserIdConsistent(item.getUser(), userId);
+        if (item.getUserId() == null) {
+            item.setUserId(userId);
+        }
+        CheckUtil.checkUserIdConsistent(item.getUserId(), userId);
 
         if (item.getQuantity() < 0) {
             throw new NotEnoughItemsException("The quantity value can not be negative!");

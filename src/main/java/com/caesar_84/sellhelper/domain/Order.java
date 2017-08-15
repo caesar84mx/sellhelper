@@ -30,11 +30,10 @@ public class Order extends BaseEntity {
     @Column(name = "quantity")
     private Map<Good, Integer> goods;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private User user;
+    private Integer userId;
 
     @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
@@ -50,23 +49,23 @@ public class Order extends BaseEntity {
 
     public Order() {}
 
-    public Order(Client client, Address shipmentAddress, Map<Good, Integer> goods, User user) {
-        this(null, client, shipmentAddress, goods, user, LocalDateTime.now(), LocalDateTime.now(),
+    public Order(Client client, Address shipmentAddress, Map<Good, Integer> goods, Integer userId) {
+        this(null, client, shipmentAddress, goods, userId, LocalDateTime.now(), LocalDateTime.now(),
                 OrderStatus.PENDING);
     }
 
-    public Order(Client client, Address shipmentAddress, Map<Good, Integer> goods, User user,
+    public Order(Client client, Address shipmentAddress, Map<Good, Integer> goods, Integer userId,
                  LocalDateTime created, OrderStatus status) {
-        this(null, client, shipmentAddress, goods, user, created, LocalDateTime.now(), status);
+        this(null, client, shipmentAddress, goods, userId, created, LocalDateTime.now(), status);
     }
 
     public Order(Integer id, Client client, Address shipmentAddress, Map<Good, Integer> goods,
-                 User user, LocalDateTime created, LocalDateTime modified, OrderStatus status) {
+                 Integer userId, LocalDateTime created, LocalDateTime modified, OrderStatus status) {
         super(id);
         this.client = client;
         this.shipmentAddress = shipmentAddress;
         this.goods = goods;
-        this.user = user;
+        this.userId = userId;
         this.created = created;
         this.modified = modified;
         this.status = status;
@@ -96,12 +95,12 @@ public class Order extends BaseEntity {
         this.goods = goods;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public LocalDateTime getCreated() {
@@ -135,7 +134,7 @@ public class Order extends BaseEntity {
                 ", client=" + client +
                 ", shipmentAddress=" + shipmentAddress +
                 ", goods=" + goods +
-                ", user=" + user +
+                ", userId=" + userId +
                 ", created=" + created +
                 ", modified=" + modified +
                 ", status=" + status +

@@ -28,25 +28,24 @@ public class Address extends BaseEntity {
     @NotBlank
     private String details;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private User user;
+    private Integer userId;
 
     public Address() {}
 
-    public Address(String country, String region, String location, String details, User user) {
-        this(null, country, region, location, details, user);
+    public Address(String country, String region, String location, String details, Integer userId) {
+        this(null, country, region, location, details, userId);
     }
 
-    public Address(Integer id, String country, String region, String location, String details, User user) {
+    public Address(Integer id, String country, String region, String location, String details, Integer userId) {
         super(id);
         this.country = country;
         this.region = region;
         this.location = location;
         this.details = details;
-        this.user = user;
+        this.userId = userId;
     }
 
     public String getCountry() {
@@ -81,9 +80,9 @@ public class Address extends BaseEntity {
         this.details = details;
     }
 
-    public User getUser() { return user; }
+    public Integer getUserId() { return userId; }
 
-    public void setUser(User user) { this.user = user; }
+    public void setUserId(Integer userId) { this.userId = userId; }
 
     @Override
     public String toString() {
@@ -93,7 +92,7 @@ public class Address extends BaseEntity {
                 ", region='" + region + '\'' +
                 ", location='" + location + '\'' +
                 ", details='" + details + '\'' +
-                ", userId=" + user.getId() +
+                ", userId=" + userId +
                 '}';
     }
 }

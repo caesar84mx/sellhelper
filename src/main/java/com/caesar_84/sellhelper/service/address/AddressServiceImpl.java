@@ -15,7 +15,11 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address saveOrUpdate(Address address, int userId) {
-        CheckUtil.checkUserIdConsistent(address.getUser(), userId);
+        if (address.getUserId() == null) {
+            address.setUserId(userId);
+        }
+
+        CheckUtil.checkUserIdConsistent(address.getUserId(), userId);
 
         return addressRepository.save(address);
     }

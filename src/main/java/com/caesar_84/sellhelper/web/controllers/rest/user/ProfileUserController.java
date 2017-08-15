@@ -20,7 +20,7 @@ public class ProfileUserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> post(@RequestBody User user, @AuthenticationPrincipal LoggedUser loggedUser) {
-        CheckUtil.checkUserIdConsistent(user, loggedUser.getId());
+        CheckUtil.checkUserIdConsistent(user.getId(), loggedUser.getId());
 
         return ResponseEntity.accepted().body(repository.save(user));
     }

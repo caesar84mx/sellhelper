@@ -18,11 +18,10 @@ public class Good extends NamedEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private User user;
+    private Integer userId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "provider_id")
@@ -34,17 +33,17 @@ public class Good extends NamedEntity {
 
     public Good() {}
 
-    public Good(String name, String serialNo, String description, User user,
+    public Good(String name, String serialNo, String description, Integer userId,
                 GoodsProvider provider, int price) {
-        this(null, name, serialNo, description, user, provider, price);
+        this(null, name, serialNo, description, userId, provider, price);
     }
 
     public Good(Integer id, String name, String serialNo, String description,
-                User user, GoodsProvider provider, int price) {
+                Integer userId, GoodsProvider provider, int price) {
         super(id, name);
         this.serialNo = serialNo;
         this.description = description;
-        this.user = user;
+        this.userId = userId;
         this.provider = provider;
         this.price = price;
     }
@@ -65,12 +64,12 @@ public class Good extends NamedEntity {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public GoodsProvider getProvider() {
@@ -96,7 +95,7 @@ public class Good extends NamedEntity {
                 ", name='" + this.getName() + '\'' +
                 ", serialNo='" + serialNo + '\'' +
                 ", description='" + description + '\'' +
-                ", userId=" + user.getId() +
+                ", userId=" + userId +
                 ", provider=" + provider +
                 ", price=" + price +
                 '}';

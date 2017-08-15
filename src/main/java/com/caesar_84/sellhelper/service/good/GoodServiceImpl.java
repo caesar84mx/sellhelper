@@ -19,7 +19,12 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public Good saveOrUpdate(Good good, int userId) {
-        CheckUtil.checkUserIdConsistent(good.getUser(), userId);
+        if (good.getUserId() == null) {
+            good.setUserId(userId);
+        }
+
+        CheckUtil.checkUserIdConsistent(good.getUserId(), userId);
+
         if (good.getPrice() < 0) {
             throw new IllegalArgumentException("The price can not be negative! (but the quality does...)");
         }

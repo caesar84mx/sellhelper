@@ -13,15 +13,15 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface StockItemsRepository extends JpaRepository<StockItem, Integer> {
     @Transactional(readOnly = true)
-    @Query("SELECT i FROM StockItem i WHERE i.id=:item_id AND i.user.id=:user_id")
+    @Query("SELECT i FROM StockItem i WHERE i.id=:item_id AND i.userId=:user_id")
     StockItem get(@Param("item_id") int id, @Param("user_id") int userId);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM StockItem i WHERE i.id=:item_id AND i.user.id=:user_id")
+    @Query("DELETE FROM StockItem i WHERE i.id=:item_id AND i.userId=:user_id")
     int delete(@Param("item_id") int id, @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT i FROM StockItem i WHERE i.user.id=:user_id")
+    @Query("SELECT i FROM StockItem i WHERE i.userId=:user_id")
     List<StockItem> getAll(@Param("user_id") int userId);
 }

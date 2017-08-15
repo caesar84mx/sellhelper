@@ -22,24 +22,23 @@ public class Client extends NamedEntity {
     @NotBlank
     private String contacts;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private User user;
+    private Integer userId;
 
     public Client() {}
 
-    public Client(String name, String middleName, String lastName, String contacts, User user) {
-        this(null, name, middleName, lastName, contacts, user);
+    public Client(String name, String middleName, String lastName, String contacts, Integer userId) {
+        this(null, name, middleName, lastName, contacts, userId);
     }
 
-    public Client(Integer id, String name, String middleName, String lastName, String contacts, User user) {
+    public Client(Integer id, String name, String middleName, String lastName, String contacts, Integer userId) {
         super(id, name);
         this.middleName = middleName;
         this.lastName = lastName;
         this.contacts = contacts;
-        this.user = user;
+        this.userId = userId;
     }
 
     public String getMiddleName() { return middleName; }
@@ -60,12 +59,12 @@ public class Client extends NamedEntity {
 
     public void setContacts(String contacts) { this.contacts = contacts; }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -76,7 +75,7 @@ public class Client extends NamedEntity {
                 ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", contacts='" + contacts + '\'' +
-                ", userId=" + user.getId() +
+                ", userId=" + userId +
                 '}';
     }
 }

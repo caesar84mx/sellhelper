@@ -15,7 +15,10 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client saveOrUpdate(Client client, int userId) {
-        CheckUtil.checkUserIdConsistent(client.getUser(), userId);
+        if (client.getUserId() == null) {
+            client.setUserId(userId);
+        }
+        CheckUtil.checkUserIdConsistent(client.getUserId(), userId);
 
         return clientRepository.save(client);
     }

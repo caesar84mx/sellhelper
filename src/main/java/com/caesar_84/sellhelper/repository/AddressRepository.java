@@ -13,15 +13,15 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface AddressRepository extends JpaRepository<Address, Integer> {
     @Transactional(readOnly = true)
-    @Query("SELECT a FROM Address a WHERE a.id=:id AND a.user.id=:user_id")
+    @Query("SELECT a FROM Address a WHERE a.id=:id AND a.userId=:user_id")
     Address get(@Param("id") int id, @Param("user_id") int userId);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Address a WHERE a.id=:id AND a.user.id=:user_id")
+    @Query("DELETE FROM Address a WHERE a.id=:id AND a.userId=:user_id")
     int delete(@Param("id") int id, @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT a FROM Address a WHERE a.user.id=:user_id ORDER BY a.country, a.location ASC")
+    @Query("SELECT a FROM Address a WHERE a.userId=:user_id ORDER BY a.country, a.location ASC")
     List<Address> getAll(@Param("user_id") int userId);
 }

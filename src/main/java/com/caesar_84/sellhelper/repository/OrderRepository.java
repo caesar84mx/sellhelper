@@ -15,37 +15,37 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface OrderRepository  extends JpaRepository<Order, Integer> {
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id AND o.id=:order_id")
+    @Query("SELECT o FROM Order o WHERE o.userId=:user_id AND o.id=:order_id")
     Order get(@Param("order_id") int orderId, @Param("user_id") int userId);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Order o WHERE o.id=:order_id AND o.user.id=:user_id")
+    @Query("DELETE FROM Order o WHERE o.id=:order_id AND o.userId=:user_id")
     int delete(@Param("order_id") int id, @Param("user_id") int userId);
 
     @Transactional
     @Modifying
-    @Query("UPDATE Order o SET o.status=:status WHERE o.id=:id AND o.user.id=:user_id")
+    @Query("UPDATE Order o SET o.status=:status WHERE o.id=:id AND o.userId=:user_id")
     int changeStatus(@Param("id") int id,
                      @Param("user_id") int userId,
                      @Param("status") OrderStatus status);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.status=:status AND o.user.id=:user_id ORDER BY o.modified DESC")
+    @Query("SELECT o FROM Order o WHERE o.status=:status AND o.userId=:user_id ORDER BY o.modified DESC")
     List<Order> getByStatus(@Param("status") OrderStatus status,
                             @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.id=:id AND o.created BETWEEN :start AND :end ORDER BY o.modified DESC")
+    @Query("SELECT o FROM Order o WHERE o.userId=:user_id AND o.created BETWEEN :start AND :end ORDER BY o.modified DESC")
     List<Order> getBetween(@Param("start") LocalDateTime start,
                            @Param("end") LocalDateTime end,
-                           @Param("id") int id);
+                           @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id AND o.client.id=:client_id ORDER BY o.modified DESC")
+    @Query("SELECT o FROM Order o WHERE o.userId=:user_id AND o.client.id=:client_id ORDER BY o.modified DESC")
     List<Order> getByClient(@Param("client_id") int clientId, @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT o FROM Order o WHERE o.user.id=:user_id ORDER BY o.modified DESC")
+    @Query("SELECT o FROM Order o WHERE o.userId=:user_id ORDER BY o.modified DESC")
     List<Order> getAll(@Param("user_id") int userId);
 }

@@ -13,15 +13,15 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface GoodsRepository extends JpaRepository<Good, Integer> {
     @Transactional(readOnly = true)
-    @Query("SELECT g FROM Good g WHERE g.id=:id AND g.user.id=:user_id")
+    @Query("SELECT g FROM Good g WHERE g.id=:id AND g.userId=:user_id")
     Good get(@Param("id") int id, @Param("user_id") int userId);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM Good g WHERE g.id=:id AND g.user.id=:user_id")
+    @Query("DELETE FROM Good g WHERE g.id=:id AND g.userId=:user_id")
     int delete(@Param("id") int id, @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT g FROM Good g WHERE g.user.id=:user_id")
+    @Query("SELECT g FROM Good g WHERE g.userId=:user_id")
     List<Good> getAll(@Param("user_id") int userId);
 }

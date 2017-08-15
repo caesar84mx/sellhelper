@@ -15,7 +15,10 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public GoodsProvider saveOrUpdate(GoodsProvider provider, int userId) {
-        CheckUtil.checkUserIdConsistent(provider.getUser(), userId);
+        if (provider.getUserId() == null) {
+            provider.setUserId(userId);
+        }
+        CheckUtil.checkUserIdConsistent(provider.getUserId(), userId);
 
         return providerRepository.save(provider);
     }

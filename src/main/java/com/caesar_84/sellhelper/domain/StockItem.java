@@ -19,23 +19,22 @@ public class StockItem extends BaseEntity {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private User user;
+    private Integer userId;
 
     public StockItem() {}
 
-    public StockItem(Good good, int quantity, User user) {
-        this(null, good, quantity, user);
+    public StockItem(Good good, int quantity, Integer userId) {
+        this(null, good, quantity, userId);
     }
 
-    public StockItem(Integer id, Good good, int quantity, User user) {
+    public StockItem(Integer id, Good good, int quantity, Integer userId) {
         super(id);
         this.good = good;
         this.quantity = quantity;
-        this.user = user;
+        this.userId = userId;
     }
 
     public Good getGood() {
@@ -54,11 +53,11 @@ public class StockItem extends BaseEntity {
         this.quantity = quantity;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

@@ -4,15 +4,11 @@ import com.caesar_84.sellhelper.domain.Good;
 import com.caesar_84.sellhelper.domain.Order;
 import com.caesar_84.sellhelper.domain.StockItem;
 import com.caesar_84.sellhelper.domain.auxclasses.OrderStatus;
-import com.caesar_84.sellhelper.repository.AddressRepository;
-import com.caesar_84.sellhelper.repository.ClientRepository;
 import com.caesar_84.sellhelper.repository.OrderRepository;
-import com.caesar_84.sellhelper.repository.StockItemsRepository;
 import com.caesar_84.sellhelper.service.address.AddressService;
 import com.caesar_84.sellhelper.service.client.ClientService;
 import com.caesar_84.sellhelper.service.stock.StockService;
 import com.caesar_84.sellhelper.util.CheckUtil;
-import com.caesar_84.sellhelper.util.exceptions.NotEnoughItemsException;
 import com.caesar_84.sellhelper.util.exceptions.WrongDateTimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,7 +95,11 @@ public class OrderServiceImpl implements OrderService {
         logger.debug("Saving order {} for user {}", order, userId);
 
         //Let's check first if this order belongs to a logged user, ...
-        CheckUtil.checkUserIdConsistent(order.getUser(), userId);
+        if (order.getUserId() == null) {
+            order.setUserId(userId);
+        }
+
+        CheckUtil.checkUserIdConsistent(order.getUserId(), userId);
         //... has a correct PENDING status...
         CheckUtil.checkOrderStatus(order, OrderStatus.PENDING);
 
@@ -129,7 +129,10 @@ public class OrderServiceImpl implements OrderService {
         logger.debug("Updating order {} for user {}", order.getId(), userId);
 
         //Check that the order's user coincides with the logged one
-        CheckUtil.checkUserIdConsistent(order.getUser(), userId);
+        if (order.getUserId() == null) {
+            order.setUserId(userId);
+        }
+        CheckUtil.checkUserIdConsistent(order.getUserId(), userId);
 
         //Get the order we are updating and check if it exists
         Order existentOrder = orderRepository.findOne(order.getId());

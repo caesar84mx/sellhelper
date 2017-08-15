@@ -15,22 +15,21 @@ public class GoodsProvider extends NamedEntity {
     @NotBlank
     private String contacts;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
-    private User user;
+    private Integer userId;
 
     public GoodsProvider() {}
 
-    public GoodsProvider(String name, String contacts, User user) {
-        this(null, name, contacts, user);
+    public GoodsProvider(String name, String contacts, Integer userId) {
+        this(null, name, contacts, userId);
     }
 
-    public GoodsProvider(Integer id, String name, String contacts, User user) {
+    public GoodsProvider(Integer id, String name, String contacts, Integer userId) {
         super(id, name);
         this.contacts = contacts;
-        this.user = user;
+        this.userId = userId;
     }
 
     public String getContacts() {
@@ -41,12 +40,12 @@ public class GoodsProvider extends NamedEntity {
         this.contacts = contacts;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -55,7 +54,7 @@ public class GoodsProvider extends NamedEntity {
                 "id=" + this.getId() +
                 ", name='" + this.getName() + '\'' +
                 ", contacts='" + contacts + '\'' +
-                ", user=" + user +
+                ", userId=" + userId +
                 '}';
     }
 }

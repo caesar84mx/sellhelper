@@ -13,15 +13,15 @@ import java.util.List;
 @RepositoryRestResource(exported = false)
 public interface GoodsProviderRepository extends JpaRepository<GoodsProvider, Integer> {
     @Transactional(readOnly = true)
-    @Query("SELECT gp FROM GoodsProvider gp WHERE gp.id=:id AND gp.user.id=:user_id")
+    @Query("SELECT gp FROM GoodsProvider gp WHERE gp.id=:id AND gp.userId=:user_id")
     GoodsProvider get(@Param("id") int id, @Param("user_id") int userId);
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM GoodsProvider gp WHERE gp.id=:id AND gp.user.id=:user_id")
+    @Query("DELETE FROM GoodsProvider gp WHERE gp.id=:id AND gp.userId=:user_id")
     int delete(@Param("id") int id, @Param("user_id") int userId);
 
     @Transactional(readOnly = true)
-    @Query("SELECT gp FROM GoodsProvider gp WHERE gp.user.id=:user_id ORDER BY gp.name")
+    @Query("SELECT gp FROM GoodsProvider gp WHERE gp.userId=:user_id ORDER BY gp.name")
     List<GoodsProvider> getAll(@Param("user_id") int userId);
 }
