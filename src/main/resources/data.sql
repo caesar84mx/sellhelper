@@ -25,8 +25,8 @@ VALUES ('Пятикрылый семихуй', '001234', 'Пятикрылый �
 INSERT INTO stock_items (good_id, quantity, user_id)
 VALUES (1, 10, 2);
 
-INSERT INTO orders (client_id, address_id, user_id)
-VALUES (1, 1, 2);
+INSERT INTO orders (client_id, address_id, user_id, created, modified)
+VALUES (1, 1, 2, '2017-08-23 17:18:35.464353', '2017-08-23 17:18:35.464353');
 
 INSERT INTO order_items (order_id, good_id, quantity)
 VALUES (1, 1, 2);

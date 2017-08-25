@@ -136,7 +136,10 @@ public class OrderServiceImpl implements OrderService {
 
         //Get the order we are updating and check if it exists
         Order existentOrder = orderRepository.findOne(order.getId());
-        CheckUtil.checkNotNull(order);
+        //CheckUtil.checkNotNull(existentOrder);
+        if (existentOrder == null) {
+            return save(order, userId);
+        }
 
         //Check if order has not changed
         if (order.equals(existentOrder)) {
