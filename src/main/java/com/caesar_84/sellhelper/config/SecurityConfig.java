@@ -33,9 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
         .antMatchers("/rest-api/v1/admin**")
-                .hasAuthority(Roles.ROLE_ADMIN.getAuthority())
+        .hasAuthority(Roles.ROLE_ADMIN.getAuthority())
         .antMatchers("/rest-api/v1/**").authenticated()
-        .and().httpBasic()
+        .and().cors().and().httpBasic()
         .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().csrf().disable();
     }
